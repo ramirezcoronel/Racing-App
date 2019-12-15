@@ -21,7 +21,15 @@ function carrera (el) {
     let pista = $('#pista'+id+' img').first()
 
     cambiarImagen(pista, nuevoSrc)
+    //como ya se asigno la pista se asigna el estado listo
+    $('#pista'+id).data('estado', 'listo');
     deshabilitar($(this))
+    deshabilitar($(el))
+
+    if ( yaEstanEnLaPista() ) {
+      console.log('COMINENZA LA WEA')
+    }
+
   })
 
   //Recorrer array de carros y mostrar previsualizacion
@@ -35,6 +43,28 @@ function carrera (el) {
     contador++
   }
 }
+
+
+//Funciones
+function yaEstanEnLaPista() {
+  let c = 1
+  let errores = 0
+
+  while ( $('#pista' + c).attr('id') ) {
+    //Si el estado de todas las pista es "listo"
+    if ( !$('#pista' + c).data('estado') ) {
+      errores++
+    }
+    c++
+  }
+
+  if ( errores ) {
+    return false
+  } else {
+    return true;
+  }
+}
+
 
 function cambiarImagen(el, src) {
   $(el).attr('src',src);
