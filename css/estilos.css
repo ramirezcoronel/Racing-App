@@ -1,0 +1,43 @@
+body{
+	background: #e6e6e6;
+}
+
+h1{
+	background:  #00aaff;
+	text-align: center;
+}
+
+td{
+	text-align: center;
+}
+.miJuego{
+	margin: 0px 40px 0px 0px;
+	display: inline-block;
+	float: left;
+}
+
+.miCarrera{
+	width: 150px;
+	height: 150px;
+}
+
+.carros{
+	width: 40px;
+	height: 40px;
+}
+
+.pista{
+	width: 70px;
+	height: 70px;
+}
+
+.bGeneral{
+	margin-left: 0px;
+	color: #000;
+	background: #c0c0c0;
+	text-align: center;
+}
+
+.parteUno, .parteDos{
+	overflow: hidden;
+}
