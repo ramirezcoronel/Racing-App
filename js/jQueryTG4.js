@@ -13,11 +13,16 @@ function carrera (el) {
   //cuando den click en el boton
   $(el).click(function() {
     seleccionDeCarro()
+    habilitar($('#bOk' + id))
   })
 
-  $('#bOk' + id).click(function () ) {
+  $('#bOk' + id).click(function ()  {
+    let nuevoSrc = $('#miCarrera').attr('src')
+    let pista = $('#pista'+id+' img').first()
 
-  }
+    cambiarImagen(pista, nuevoSrc)
+    deshabilitar($(this))
+  })
 
   //Recorrer array de carros y mostrar previsualizacion
   function seleccionDeCarro() {
