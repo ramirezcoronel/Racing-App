@@ -16,7 +16,7 @@ function carrera (el) {
   })
 
   $('#bOk' + id).click(function () ) {
-    
+
   }
 
   //Recorrer array de carros y mostrar previsualizacion
@@ -33,4 +33,15 @@ function carrera (el) {
 
 function cambiarImagen(el, src) {
   $(el).attr('src',src);
+}
+
+function habilitar (el) {
+  if ($(el).attr('disabled')) {
+    $(el).removeAttr('disabled')
+  }
+}
+function deshabilitar  (el) {
+  if (!$(el).attr('disabled')) {
+    $(el).attr('disabled', 'disabled')
+  }
 }
