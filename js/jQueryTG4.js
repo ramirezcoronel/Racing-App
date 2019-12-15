@@ -1,9 +1,18 @@
-((c, d)=> {
+$(document).ready(function (){
 
-  const carros = d.querySelectorAll('.carros')
+  let counter = 0
 
-  c(carros)
+  $('#bCarro1').click(function () {
+    if(counter >= $('.carros').length){
+      counter = 0
+    }
+    let nuevoSrc = $('.carros')[counter]
 
+    cambiarImagen( $('#miCarrera'), $(nuevoSrc).attr('src') )
+    counter++
+  })
 
-
-})(console.log, document)
+  function cambiarImagen(el, src) {
+    el.attr('src',src);
+  }
+})
