@@ -3,6 +3,10 @@ $(document).ready(function (){
   carrera($('#bCarro1'))
   carrera($('#bCarro2'))
 
+  $('#bJugar').click(function () {
+    comenzarCarrera()
+  })
+
 })
 
 //Closure para reutilizar un contador
@@ -27,7 +31,7 @@ function carrera (el) {
     deshabilitar($(el))
 
     if ( yaEstanEnLaPista() ) {
-      console.log('COMINENZA LA WEA')
+      habilitar($('#bJugar'))
     }
 
   })
@@ -65,7 +69,6 @@ function yaEstanEnLaPista() {
   }
 }
 
-
 function cambiarImagen(el, src) {
   $(el).attr('src',src);
 }
@@ -79,4 +82,50 @@ function deshabilitar  (el) {
   if (!$(el).attr('disabled')) {
     $(el).attr('disabled', 'disabled')
   }
+}
+
+//Una vez inicia la carrera
+function comenzarCarrera () {
+
+  let pistas = obtenerPistas()
+
+  $(pistas).each(function (index, pista) {
+
+    animarCarrera($(this).children(), 500)
+  })
+
+}
+
+function animarCarrera(arrays, tiempo) {
+  let contador = 0;
+
+  let animacion = setInterval(animar, tiempo);
+
+  function animar () {
+    let frameAuxiliar = $(arrays[contador + 1]).attr("src")
+    $(arrays[contador + 1]).attr("src", $(arrays[contador]).attr('src'))
+    $(arrays[contador]).attr("src", frameAuxiliar)
+    contador++
+    console.log('holaaa')
+    if ( contador === $(arrays).length -1)
+    detenerAnimacion()
+  }
+
+  function detenerAnimacion() {
+    clearInterval(animacion)
+  }
+}
+
+
+function obtenerPistas () {
+  let cantidadDePistas = 1
+  let contador = 0
+  let pistas = []
+  while ($('#pista' + cantidadDePistas).attr('id')) {
+
+    pistas[contador] = $('#pista' + cantidadDePistas)
+    cantidadDePistas++
+    contador++
+  }
+  return pistas
 }
