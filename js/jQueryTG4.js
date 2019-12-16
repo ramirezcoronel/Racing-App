@@ -13,9 +13,6 @@ $(document).ready(function (){
   } )
 })
 
-
-
-
 function resetear () {
   pistas = obtenerPistas()
 
@@ -100,15 +97,7 @@ function comenzarCarrera () {
 
   $(pistas).each(function (index, pista) {
     let concursante = $(this).children()[0]
-    let modoRapidin = 2;
-
-    if ($(concursante).attr('src') == 'imagenes/costa-rica.gif') {
-      animarCarrera($(this), modoRapidin)
-    } else {
       animarCarrera($(this), (Math.floor(Math.random() * 4) + 1) * 150)
-    }
-
-
   })
 
 }
