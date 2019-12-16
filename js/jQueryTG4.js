@@ -26,6 +26,7 @@ function carrera (el) {
     let pista = $('#pista'+id+' img').first()
 
     cambiarImagen(pista, nuevoSrc)
+    cambiarImagen($('#miCarrera'), 'imagenes/carreraAuto.jpg')
     //como ya se asigno la pista se asigna el estado listo
     $('#pista'+id).data('estado', 'listo');
     deshabilitar($(this))
@@ -51,6 +52,105 @@ function carrera (el) {
 
 
 //Funciones
+
+
+//Una vez inicia la carrera
+function comenzarCarrera () {
+
+  let pistas = obtenerPistas()
+
+  $(pistas).each(function (index, pista) {
+    let concursante = $(this).children()[0]
+
+
+    if ($(concursante).attr('src') == 'imagenes/costa-rica.gif') {
+      animarCarrera($(this), 20)
+    } else {
+      animarCarrera($(this), (Math.floor(Math.random() * 4) + 1) * 150)
+    }
+
+  })
+
+}
+
+function animarCarrera(el, tiempo) {
+  let contador = 0;
+  let arrays = $(el).children()
+
+  let animacion = setInterval(animar, tiempo);
+
+  function animar () {
+    let frameAuxiliar
+    if(contador === $(arrays).length -2) {
+       frameAuxiliar = $(arrays[contador -1]).attr("src")
+    } else {
+       frameAuxiliar = $(arrays[contador + 1]).attr("src")
+    }
+
+
+    $(arrays[contador + 1]).attr("src", $(arrays[contador]).attr('src'))
+    $(arrays[contador]).attr("src", frameAuxiliar)
+    contador++
+
+    if ( contador === $(arrays).length -1){
+      detenerAnimacion(arrays[contador])
+    }
+
+  }
+
+  function detenerAnimacion(ganador) {
+    if ( hayGanadores() ) {
+
+    } else {
+      $(el).data('ganador', 'si')
+      $('#miCarrera').attr('src', $(ganador).attr('src'))
+    }
+
+    clearInterval(animacion)
+  }
+}
+
+
+function hayGanadores () {
+  let pistas = obtenerPistas()
+
+  let ganador = 0
+
+  $(pistas).each(function(){
+    if($(this).data('ganador')) {
+      ganador++
+    }
+  })
+
+  return ganador
+}
+
+function obtenerPistas () {
+  let cantidadDePistas = 1
+  let contador = 0
+  let pistas = []
+  while ($('#pista' + cantidadDePistas).attr('id')) {
+
+    pistas[contador] = $('#pista' + cantidadDePistas)
+    cantidadDePistas++
+    contador++
+  }
+  return pistas
+}
+function cambiarImagen(el, src) {
+  $(el).attr('src',src);
+}
+
+function habilitar (el) {
+  if ($(el).attr('disabled')) {
+    $(el).removeAttr('disabled')
+  }
+}
+function deshabilitar  (el) {
+  if (!$(el).attr('disabled')) {
+    $(el).attr('disabled', 'disabled')
+  }
+}
 function yaEstanEnLaPista() {
   let c = 1
   let errores = 0
@@ -68,72 +168,4 @@ function yaEstanEnLaPista() {
   } else {
     return true;
   }
-}
-
-function cambiarImagen(el, src) {
-  $(el).attr('src',src);
-}
-
-function habilitar (el) {
-  if ($(el).attr('disabled')) {
-    $(el).removeAttr('disabled')
-  }
-}
-function deshabilitar  (el) {
-  if (!$(el).attr('disabled')) {
-    $(el).attr('disabled', 'disabled')
-  }
-}
-
-//Una vez inicia la carrera
-function comenzarCarrera () {
-
-  let pistas = obtenerPistas()
-
-  $(pistas).each(function (index, pista) {
-    let concursante = $(this).children()[0]
-
-
-    if ($(concursante).attr('src') == 'imagenes/costa-rica.gif') {
-      animarCarrera($(this).children(), 20)
-    } else {
-      animarCarrera($(this).children(), (Math.floor(Math.random() * 4) + 1) * 150)
-    }
-
-  })
-
-}
-
-function animarCarrera(arrays, tiempo) {
-  let contador = 0;
-
-  let animacion = setInterval(animar, tiempo);
-
-  function animar () {
-    let frameAuxiliar = $(arrays[contador + 1]).attr("src")
-    $(arrays[contador + 1]).attr("src", $(arrays[contador]).attr('src'))
-    $(arrays[contador]).attr("src", frameAuxiliar)
-    contador++
-    console.log('holaaa')
-    if ( contador === $(arrays).length -1)
-    detenerAnimacion()
-  }
-
-  function detenerAnimacion() {
-    clearInterval(animacion)
-  }
-}
-
-
-function obtenerPistas () {
-  let cantidadDePistas = 1
-  let contador = 0
-  let pistas = []
-  while ($('#pista' + cantidadDePistas).attr('id')) {
-
-    pistas[contador] = $('#pista' + cantidadDePistas)
-    cantidadDePistas++
-    contador++
-  }
-  return pistas
 }
