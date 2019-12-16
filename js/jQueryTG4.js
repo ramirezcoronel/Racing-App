@@ -40,8 +40,12 @@ function resetear () {
     deshabilitar($('#bJugar'))
   }
 
+  function resetarGanador() {
+    $('#miCarrera').attr('src', 'imagenes/carreraAuto.jpg')
+  }
   resetearCarros()
   resetearPista()
+  resetarGanador()
 }
 
 
@@ -97,7 +101,7 @@ function comenzarCarrera () {
 
   $(pistas).each(function (index, pista) {
     let concursante = $(this).children()[0]
-      animarCarrera($(this), (Math.floor(Math.random() * 4) + 1) * 150)
+      animarCarrera($(this), (Math.floor(Math.random() * 4) + 1) * 100)
   })
 
 }
