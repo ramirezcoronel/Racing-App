@@ -8,7 +8,34 @@ $(document).ready(function (){
     deshabilitar($(this));
   })
 
+  $('#bReset').click( function () {
+      resetear()
+  })
+
 })
+
+function resetear () {
+  pistas = obtenerPistas()
+
+  function resetearPista() {
+    $(pistas).each(function (indice, elemento) {
+      let pista = $(elemento[0]).children()
+      let cantidadDePistas = $(pista).length
+      let posicion = indice + 1
+
+      $(pista[0]).attr('src', 'imagenes/Select'+ posicion +'.jpg')
+      $(pista[ cantidadDePistas - 1 ]).attr('src', 'imagenes/meta.jpg')
+    })
+  }
+
+  function resetearCarros() {
+    
+  }
+
+  resetearPista()
+}
+
+
 
 //Closure para reutilizar un contador
 function carrera (el) {
@@ -61,10 +88,10 @@ function comenzarCarrera () {
 
   $(pistas).each(function (index, pista) {
     let concursante = $(this).children()[0]
-
+    let modoRapidin = 2;
 
     if ($(concursante).attr('src') == 'imagenes/costa-rica.gif') {
-      animarCarrera($(this), 20)
+      animarCarrera($(this), modoRapidin)
     } else {
       animarCarrera($(this), (Math.floor(Math.random() * 4) + 1) * 150)
     }
