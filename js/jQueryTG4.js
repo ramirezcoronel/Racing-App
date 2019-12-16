@@ -91,8 +91,15 @@ function comenzarCarrera () {
   let pistas = obtenerPistas()
 
   $(pistas).each(function (index, pista) {
+    let concursante = $(this).children()[0]
 
-    animarCarrera($(this).children(), (Math.floor(Math.random() * 4) + 1) * 150)
+
+    if ($(concursante).attr('src') == 'imagenes/costa-rica.gif') {
+      animarCarrera($(this).children(), 20)
+    } else {
+      animarCarrera($(this).children(), (Math.floor(Math.random() * 4) + 1) * 150)
+    }
+
   })
 
 }
