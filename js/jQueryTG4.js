@@ -9,10 +9,12 @@ $(document).ready(function (){
   })
 
   $('#bReset').click( function () {
-      resetear()
-  })
-
+    resetear()
+  } )
 })
+
+
+
 
 function resetear () {
   pistas = obtenerPistas()
@@ -23,15 +25,25 @@ function resetear () {
       let cantidadDePistas = $(pista).length
       let posicion = indice + 1
 
-      $(pista[0]).attr('src', 'imagenes/Select'+ posicion +'.jpg')
+      $(pista).each(function(indice, carril) {
+        $(carril).attr('src', 'imagenes/pista'+ posicion+ '.jpg')
+      })
+
+      $(elemento[0]).attr('src', 'imagenes/Select'+ posicion +'.jpg')
       $(pista[ cantidadDePistas - 1 ]).attr('src', 'imagenes/meta.jpg')
+
+      $(elemento[0]).removeData('estado')
+      $(pista[ cantidadDePistas - 1 ]).removeData('estado')
     })
   }
 
   function resetearCarros() {
-    
+    habilitar($('#bCarro1'))
+    habilitar($('#bCarro2'))
+    deshabilitar($('#bJugar'))
   }
 
+  resetearCarros()
   resetearPista()
 }
 
@@ -96,6 +108,7 @@ function comenzarCarrera () {
       animarCarrera($(this), (Math.floor(Math.random() * 4) + 1) * 150)
     }
 
+
   })
 
 }
@@ -120,6 +133,7 @@ function animarCarrera(el, tiempo) {
     contador++
 
     if ( contador === $(arrays).length -1){
+
       detenerAnimacion(arrays[contador])
     }
 
@@ -133,8 +147,12 @@ function animarCarrera(el, tiempo) {
       $('#miCarrera').attr('src', $(ganador).attr('src'))
     }
 
-    clearInterval(animacion)
+
   }
+
+  $('#bReset').click( function () {
+      clearInterval(animacion)
+  })
 }
 
 
@@ -184,6 +202,7 @@ function yaEstanEnLaPista() {
 
   while ( $('#pista' + c).attr('id') ) {
     //Si el estado de todas las pista es "listo"
+    console.log($('#pista' + c).data('estado'))
     if ( !$('#pista' + c).data('estado') ) {
       errores++
     }
