@@ -26,7 +26,7 @@ function resetear () {
         $(carril).attr('src', 'imagenes/pista'+ posicion+ '.jpg')
       })
 
-      $(elemento[0]).attr('src', 'imagenes/Select'+ posicion +'.jpg')
+      $(pista[0]).attr('src', 'imagenes/Select'+ posicion +'.jpg')
       $(pista[ cantidadDePistas - 1 ]).attr('src', 'imagenes/meta.jpg')
 
       $(elemento[0]).removeData('estado')
