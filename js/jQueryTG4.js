@@ -5,6 +5,7 @@ $(document).ready(function (){
 
   $('#bJugar').click(function () {
     comenzarCarrera()
+    deshabilitar($(this));
   })
 
 })
@@ -91,7 +92,7 @@ function comenzarCarrera () {
 
   $(pistas).each(function (index, pista) {
 
-    animarCarrera($(this).children(), 500)
+    animarCarrera($(this).children(), (Math.floor(Math.random() * 4) + 1) * 150)
   })
 
 }
