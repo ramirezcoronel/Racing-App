@@ -1,5 +1,7 @@
 $(document).ready(function (){
 
+  setMetas()
+
   carrera($('#bCarro1'))
   carrera($('#bCarro2'))
 
@@ -15,6 +17,16 @@ $(document).ready(function (){
 
 enPista()
 })
+
+function setMetas() {
+  let pistas = $('.pista').filter((index, el)=> $(el).attr('src') === 'imagenes/meta.jpg').parent()
+  let carriles = pistas.children()
+  let metas = $(carriles).filter((i, el)=> $(el).attr('src') == 'imagenes/meta.jpg')
+
+  $(metas).each((i, el)=> $(el).data('meta', 'true'))
+  
+
+}
 
 /********************************************************************************
 
@@ -140,7 +152,7 @@ function animarCarrera(el, tiempo) {
 
 ********************************************************************************/
 function resetear () {
-  pistas = obtenerPistas()
+  pistas = getPistas()
 
   function resetearPista() {
     $(pistas).each(function (indice, elemento) {
@@ -162,6 +174,30 @@ function resetear () {
     })
   }
 
+  function rPista() {
+    $(pistas).each(function (indice, elemento) {
+      let pista = $(elemento).children()
+      let cantidadDePistas = $(pista).length
+      let posicion = indice + 1
+
+      $(pista).each(function(indice, carril) {
+        $(carril).attr('src', 'imagenes/pista'+ posicion+ '.jpg')
+        if ($(carril).data('meta')) {
+          $(carril).attr('src', 'imagenes/meta.jpg')
+        }
+      })
+
+
+      $(pista[0]).attr('src', 'imagenes/Select'+ posicion +'.jpg')
+      $(pista[ cantidadDePistas - 1 ]).attr('src', 'imagenes/meta.jpg')
+
+      $(elemento).removeData('ganador')
+
+      $(elemento).removeData('estado')
+      $(pista[ cantidadDePistas - 1 ]).removeData('estado')
+    })
+  }
+
   function resetearCarros() {
     habilitar($('#bCarro1'))
     habilitar($('#bCarro2'))
@@ -172,7 +208,7 @@ function resetear () {
     $('#miCarrera').attr('src', 'imagenes/carreraAuto.jpg')
   }
   resetearCarros()
-  resetearPista()
+  rPista()
   resetarGanador()
 }
 
@@ -197,6 +233,9 @@ function obtenerPistas () {
   }
   return pistas
 }
+
+
+
 function cambiarImagen(el, src) {
   $(el).attr('src',src);
 }
@@ -212,10 +251,20 @@ function deshabilitar  (el) {
   }
 }
 
+//NEW FUNCTION
+
 function enPista() {
-  const pistas = $('.pista').filter((index, el)=> $(el).attr('src') === 'imagenes/meta.jpg').parent()
+  const pistas = getPistas()
   let estadoDePistas = $(pistas).filter((index, el)=> $(el).data('estado')).length
 
   return estadoDePistas === pistas.length ? true : false
+}
+
+function getPistas () {
+  const pistas = $('.pista').filter((index, el)=> $(el).data('meta')).parent()
+
+  console.log
+
+  return pistas
 }
 
