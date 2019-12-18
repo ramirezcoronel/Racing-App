@@ -17,17 +17,6 @@ $(document).ready(function (){
 
 enPista()
 })
-
-function setMetas() {
-  let pistas = $('.pista').filter((index, el)=> $(el).attr('src') === 'imagenes/meta.jpg').parent()
-  let carriles = pistas.children()
-  let metas = $(carriles).filter((i, el)=> $(el).attr('src') == 'imagenes/meta.jpg')
-
-  $(metas).each((i, el)=> $(el).data('meta', 'true'))
-  
-
-}
-
 /********************************************************************************
 
                     FUNCION PRINCIPAL
@@ -79,7 +68,7 @@ function carrera (el) {
 //Una vez inicia la carrera
 function comenzarCarrera () {
 
-  let pistas = obtenerPistas()
+  let pistas = getPistas()
 
   $(pistas).each(function (index, pista) {
     let concursante = $(this).children()[0]
@@ -126,7 +115,7 @@ function animarCarrera(el, tiempo) {
   }
 
   function hayGanadores () {
-    let pistas = obtenerPistas()
+    let pistas = getPistas()
 
     let ganador = 0
 
@@ -153,26 +142,6 @@ function animarCarrera(el, tiempo) {
 ********************************************************************************/
 function resetear () {
   pistas = getPistas()
-
-  function resetearPista() {
-    $(pistas).each(function (indice, elemento) {
-      let pista = $(elemento[0]).children() //Array de cada pista
-      let cantidadDePistas = $(pista).length //cantidad de imagenes
-      let posicion = indice + 1
-
-      $(pista).each(function(indice, carril) {
-        $(carril).attr('src', 'imagenes/pista'+ posicion+ '.jpg')
-      })
-
-      $(pista[0]).attr('src', 'imagenes/Select'+ posicion +'.jpg')
-      $(pista[ cantidadDePistas - 1 ]).attr('src', 'imagenes/meta.jpg')
-
-      $(elemento[0]).removeData('ganador')
-
-      $(elemento[0]).removeData('estado')
-      $(pista[ cantidadDePistas - 1 ]).removeData('estado')
-    })
-  }
 
   function rPista() {
     $(pistas).each(function (indice, elemento) {
@@ -219,23 +188,6 @@ function resetear () {
 
 **************************************************************************/
 
-
-
-function obtenerPistas () {
-  let cantidadDePistas = 1
-  let contador = 0
-  let pistas = []
-  while ($('#pista' + cantidadDePistas).attr('id')) {
-
-    pistas[contador] = $('#pista' + cantidadDePistas)
-    cantidadDePistas++
-    contador++
-  }
-  return pistas
-}
-
-
-
 function cambiarImagen(el, src) {
   $(el).attr('src',src);
 }
@@ -262,9 +214,13 @@ function enPista() {
 
 function getPistas () {
   const pistas = $('.pista').filter((index, el)=> $(el).data('meta')).parent()
-
-  console.log
-
   return pistas
 }
 
+function setMetas() {
+  let pistas = $('.pista').filter((index, el)=> $(el).attr('src') === 'imagenes/meta.jpg').parent()
+  let carriles = pistas.children()
+  let metas = $(carriles).filter((i, el)=> $(el).attr('src') == 'imagenes/meta.jpg')
+
+  $(metas).each((i, el)=> $(el).data('meta', 'true'))
+}
