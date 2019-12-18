@@ -13,44 +13,11 @@ $(document).ready(function (){
   } )
 })
 
-function resetear () {
-  pistas = obtenerPistas()
+/********************************************************************************
 
-  function resetearPista() {
-    $(pistas).each(function (indice, elemento) {
-      let pista = $(elemento[0]).children()
-      let cantidadDePistas = $(pista).length
-      let posicion = indice + 1
+                    FUNCION PRINCIPAL
 
-      $(pista).each(function(indice, carril) {
-        $(carril).attr('src', 'imagenes/pista'+ posicion+ '.jpg')
-      })
-
-      $(pista[0]).attr('src', 'imagenes/Select'+ posicion +'.jpg')
-      $(pista[ cantidadDePistas - 1 ]).attr('src', 'imagenes/meta.jpg')
-
-      $(elemento[0]).removeData('estado')
-      $(pista[ cantidadDePistas - 1 ]).removeData('estado')
-    })
-  }
-
-  function resetearCarros() {
-    habilitar($('#bCarro1'))
-    habilitar($('#bCarro2'))
-    deshabilitar($('#bJugar'))
-  }
-
-  function resetarGanador() {
-    $('#miCarrera').attr('src', 'imagenes/carreraAuto.jpg')
-  }
-  resetearCarros()
-  resetearPista()
-  resetarGanador()
-}
-
-
-
-//Closure para reutilizar un contador
+********************************************************************************/
 function carrera (el) {
   let contador = 0
   let id = $(el).attr('id').slice(-1) //obtengo el ultimo numero de su id
@@ -69,10 +36,13 @@ function carrera (el) {
     cambiarImagen($('#miCarrera'), 'imagenes/carreraAuto.jpg')
     //como ya se asigno la pista se asigna el estado listo
     $('#pista'+id).data('estado', 'listo');
-    deshabilitar($(this))
+    //Se desabilita el poder volver a elegir jugador
+    deshabilitar($(this)) 
     deshabilitar($(el))
 
     if ( yaEstanEnLaPista() ) {
+      //Si todos los jugadores estan en pista
+      //que se habilite la opcion de jugar
       habilitar($('#bJugar'))
     }
 
@@ -89,10 +59,6 @@ function carrera (el) {
     contador++
   }
 }
-
-
-//Funciones
-
 
 //Una vez inicia la carrera
 function comenzarCarrera () {
@@ -143,25 +109,77 @@ function animarCarrera(el, tiempo) {
 
   }
 
+  function hayGanadores () {
+    let pistas = obtenerPistas()
+
+    let ganador = 0
+
+    $(pistas).each(function(){
+      if($(this).data('ganador')) {
+        ganador++
+      }
+    })
+
+    return ganador
+  }
+
+
   $('#bReset').click( function () {
       clearInterval(animacion)
   })
 }
 
 
-function hayGanadores () {
-  let pistas = obtenerPistas()
+/********************************************************************************
 
-  let ganador = 0
+                  FUNCION PARA RESETEAR
 
-  $(pistas).each(function(){
-    if($(this).data('ganador')) {
-      ganador++
-    }
-  })
+********************************************************************************/
+function resetear () {
+  pistas = obtenerPistas()
 
-  return ganador
+  function resetearPista() {
+    $(pistas).each(function (indice, elemento) {
+      let pista = $(elemento[0]).children() //Array de cada pista
+      let cantidadDePistas = $(pista).length //cantidad de imagenes
+      let posicion = indice + 1
+
+      $(pista).each(function(indice, carril) {
+        $(carril).attr('src', 'imagenes/pista'+ posicion+ '.jpg')
+      })
+
+      $(pista[0]).attr('src', 'imagenes/Select'+ posicion +'.jpg')
+      $(pista[ cantidadDePistas - 1 ]).attr('src', 'imagenes/meta.jpg')
+
+      $(elemento[0]).removeData('ganador')
+
+      $(elemento[0]).removeData('estado')
+      $(pista[ cantidadDePistas - 1 ]).removeData('estado')
+    })
+  }
+
+  function resetearCarros() {
+    habilitar($('#bCarro1'))
+    habilitar($('#bCarro2'))
+    deshabilitar($('#bJugar'))
+  }
+
+  function resetarGanador() {
+    $('#miCarrera').attr('src', 'imagenes/carreraAuto.jpg')
+  }
+  resetearCarros()
+  resetearPista()
+  resetarGanador()
 }
+
+
+/************************************************************************
+
+              FUNCIONES DE AYUDA
+
+**************************************************************************/
+
+
 
 function obtenerPistas () {
   let cantidadDePistas = 1
