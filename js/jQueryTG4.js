@@ -72,7 +72,7 @@ function comenzarCarrera () {
 
   $(pistas).each(function (index, pista) {
     let concursante = $(this).children()[0]
-      animarCarrera($(this), (Math.floor(Math.random() * 4) + 1) * 100)
+      animarCarrera($(this), (Math.floor(Math.random() * 4) + 1) * 10)
   })
 
 }
@@ -110,22 +110,14 @@ function animarCarrera(el, tiempo) {
       $(el).data('ganador', 'si')
       $('#miCarrera').attr('src', $(ganador).attr('src'))
     }
-
-
   }
 
   function hayGanadores () {
     let pistas = getPistas()
-
-    let ganador = 0
-
-    $(pistas).each(function(){
-      if($(this).data('ganador')) {
-        ganador++
-      }
-    })
-
-    return ganador
+    const reducir = (total, num) => total + num
+    let hayGanador = $(pistas).map((i,el)=> $(el).data('ganador') === 'si' ? 1 : 0)
+    let resul = hayGanador.toArray().reduce(reducir)
+    return resul
   }
 
 
