@@ -114,9 +114,8 @@ function animarCarrera(el, tiempo) {
 
   function hayGanadores () {
     let pistas = getPistas()
-    const reducir = (total, num) => total + num
     let hayGanador = $(pistas).map((i,el)=> $(el).data('ganador') === 'si' ? 1 : 0)
-    let resul = hayGanador.toArray().reduce(reducir)
+    let resul = hayGanador.toArray().reduce((total, num) => total + num)
     return resul
   }
 
