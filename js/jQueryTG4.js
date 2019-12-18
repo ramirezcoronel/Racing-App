@@ -11,6 +11,9 @@ $(document).ready(function (){
   $('#bReset').click( function () {
     resetear()
   } )
+
+
+enPista()
 })
 
 /********************************************************************************
@@ -40,10 +43,11 @@ function carrera (el) {
     deshabilitar($(this)) 
     deshabilitar($(el))
 
-    if ( yaEstanEnLaPista() ) {
+    if ( enPista() ) {
       //Si todos los jugadores estan en pista
       //que se habilite la opcion de jugar
       habilitar($('#bJugar'))
+      enPista()
     }
 
   })
@@ -207,22 +211,11 @@ function deshabilitar  (el) {
     $(el).attr('disabled', 'disabled')
   }
 }
-function yaEstanEnLaPista() {
-  let c = 1
-  let errores = 0
 
-  while ( $('#pista' + c).attr('id') ) {
-    //Si el estado de todas las pista es "listo"
-    console.log($('#pista' + c).data('estado'))
-    if ( !$('#pista' + c).data('estado') ) {
-      errores++
-    }
-    c++
-  }
+function enPista() {
+  const pistas = $('.pista').filter((index, el)=> $(el).attr('src') === 'imagenes/meta.jpg').parent()
+  let estadoDePistas = $(pistas).filter((index, el)=> $(el).data('estado')).length
 
-  if ( errores ) {
-    return false
-  } else {
-    return true;
-  }
+  return estadoDePistas === pistas.length ? true : false
 }
+
