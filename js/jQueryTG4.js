@@ -194,8 +194,6 @@ function deshabilitar  (el) {
   }
 }
 
-//NEW FUNCTION
-
 function enPista() {
   const pistas = getPistas()
   let estadoDePistas = $(pistas).filter((index, el)=> $(el).data('estado')).length
